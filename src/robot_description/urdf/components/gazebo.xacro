@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="gazebo_plugins">
+    <gazebo reference="right_wheel">
+      <mu1>1.0</mu1>
+      <mu2>1.0</mu2>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <visual>
+        <material>
+          <ambient>0.792 0.820 0.933 1</ambient>
+          <diffuse>0.792 0.820 0.933 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+        </material>
+      </visual>
+    </gazebo>
+    <gazebo reference="left_wheel">
+      <mu1>1.0</mu1>
+      <mu2>1.0</mu2>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <visual>
+        <material>
+          <ambient>0.792 0.820 0.933 1</ambient>
+          <diffuse>0.792 0.820 0.933 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+        </material>
+      </visual>
+    </gazebo>
+    <gazebo reference="front_free_wheel">
+      <mu1>0.0</mu1>
+      <mu2>0.0</mu2>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <visual>
+        <material>
+          <ambient>0.792 0.820 0.933 1</ambient>
+          <diffuse>0.792 0.820 0.933 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+        </material>
+      </visual>
+    </gazebo>
+    <gazebo reference="back_free_wheel">
+      <mu1>0.0</mu1>
+      <mu2>0.0</mu2>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <visual>
+        <material>
+          <ambient>0.792 0.820 0.933 1</ambient>
+          <diffuse>0.792 0.820 0.933 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+        </material>
+      </visual>
+    </gazebo>
+    <gazebo reference="imu_link">
+      <visual>
+        <material>
+          <ambient>0.0 0.0 1.0 1</ambient>
+          <diffuse>0.0 0.0 1.0 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+        </material>
+      </visual>
+      <sensor name="imu_sensor" type="imu">
+        <always_on>true</always_on>
+        <update_rate>100</update_rate>
+        <topic>/imu</topic>
+        <imu>
+          <angular_velocity>
+            <x><noise type="gaussian"><mean>0</mean><stddev>0.009</stddev></noise></x>
+            <y><noise type="gaussian"><mean>0</mean><stddev>0.009</stddev></noise></y>
+            <z><noise type="gaussian"><mean>0</mean><stddev>0.009</stddev></noise></z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x><noise type="gaussian"><mean>0</mean><stddev>0.021</stddev></noise></x>
+            <y><noise type="gaussian"><mean>0</mean><stddev>0.021</stddev></noise></y>
+            <z><noise type="gaussian"><mean>0</mean><stddev>0.021</stddev></noise></z>
+          </linear_acceleration>
+        </imu>
+      </sensor>
+    </gazebo>
+    <gazebo>
+      <plugin filename="gz-sim-diff-drive-system" name="gz::sim::systems::DiffDrive">
+        <left_joint>lw</left_joint>
+        <right_joint>rw</right_joint>
+        <wheel_separation>0.1768</wheel_separation>
+        <wheel_radius>0.034</wheel_radius>
+        <odom_publish_frequency>50</odom_publish_frequency>
+        <topic>/cmd_vel</topic>
+        <odom_topic>/odom</odom_topic>
+        <tf_topic>/tf</tf_topic>
+        <frame_id>odom</frame_id>
+        <child_frame_id>robot</child_frame_id>
+        <publish_odom_tf>true</publish_odom_tf>
+      </plugin>
+    </gazebo>
+    <gazebo>
+      <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
+        <topic>/joint_states</topic>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+</robot>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g transform='translate(17.5,24) scale(0.1015625)'><path fill='%2358a6ff' d='M320 0c17.7 0 32 14.3 32 32l0 64 120 0c39.8 0 72 32.2 72 72l0 272c0 39.8-32.2 72-72 72l-304 0c-39.8 0-72-32.2-72-72l0-272c0-39.8 32.2-72 72-72l120 0 0-64c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zM264 256a40 40 0 1 0 -80 0 40 40 0 1 0 80 0zm152 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80zM48 224l16 0 0 192-16 0c-26.5 0-48-21.5-48-48l0-96c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48l0 96c0 26.5-21.5 48-48 48l-16 0 0-192 16 0z'/></g></svg>">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+    <div class="header-left">
+      <div class="brand-icon"><i class="fas fa-robot"></i></div>
+    </div>
+  <div class="header-right">
+    <div class="connection-status">
+      <span class="status-dot" id="status-dot"></span>
+      <span id="status-text">Connecting...</span>
+      <button id="reconnect-btn">Reconnect</button>
+    </div>
+    <span id="debug-info"></span>
+  </div>
+</header>
+
+<main>
+  <div class="card full">
+    <div class="card-header">
+      <span>&#9678; Camera View</span>
+      <span id="cam-timestamp" class="header-timestamp">--</span>
+    </div>
+    <div class="card-body" style="padding:0;position:relative;">
+      <img id="camera-feed" alt="Annotated feed">
+      <div class="cam-overlay">
+        <span class="cam-badge" id="cam-status-badge">&#9679; Live</span>
+        <span class="cam-badge" id="cam-res-badge">1280x720</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-canvas">
+    <div class="card-header">&#9733; 2D Robot View</div>
+    <div class="card-body" style="padding:0;flex:1;display:flex;">
+      <canvas id="robot-canvas"></canvas>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">&#9881; Robot Status</div>
+    <div class="card-body">
+      <div class="data-grid">
+        <div class="data-item">
+          <div class="data-label"><span class="s-icon">&#128205;</span> POS X</div>
+          <div class="data-value" id="val-x">-- <span class="unit">m</span></div>
+        </div>
+        <div class="data-item">
+          <div class="data-label"><span class="s-icon">&#128205;</span> POS Y</div>
+          <div class="data-value" id="val-y">-- <span class="unit">m</span></div>
+        </div>
+        <div class="data-item">
+          <div class="data-label"><span class="s-icon">&#127991;</span> YAW</div>
+          <div class="data-value" id="val-yaw">-- <span class="unit">deg</span></div>
+        </div>
+        <div class="data-item">
+          <div class="data-label"><span class="s-icon">&#128246;</span> LATENCY</div>
+          <div class="data-value" id="val-latency">-- <span class="unit">ms</span></div>
+        </div>
+        <div class="data-item">
+          <div class="data-label"><span class="s-icon">&#127919;</span> BALL DIST</div>
+          <div class="data-value" id="val-ball-dist">-- <span class="unit">m</span></div>
+        </div>
+        <div class="data-item">
+          <div class="data-label"><span class="s-icon">&#128187;</span> FPS</div>
+          <div class="data-value" id="val-fps">-- <span class="unit">fps</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">&#9654; Control Panel</div>
+    <div class="card-body">
+      <div class="control-grid">
+        <button class="ctrl-btn" data-dir="forward" style="grid-area: up;">&#9650;</button>
+        <button class="ctrl-btn" data-dir="left" style="grid-area: left;">&#9664;</button>
+        <button class="ctrl-btn stop" data-dir="stop" style="grid-area: stop;">&#9632;</button>
+        <button class="ctrl-btn" data-dir="right" style="grid-area: right;">&#9654;</button>
+        <button class="ctrl-btn" data-dir="backward" style="grid-area: down;">&#9660;</button>
+      </div>
+      <div class="speed-indicator">
+        <span>Speed: <strong id="ctrl-speed">0.50</strong> m/s</span>
+        <span>Turn: <strong id="ctrl-turn">1.00</strong> rad/s</span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/roslib@1/build/roslib.min.js"></script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

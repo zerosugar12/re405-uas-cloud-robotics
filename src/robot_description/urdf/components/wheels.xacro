@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="wheels">
+    <link name="right_wheel">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.0214028"/>
+        <inertia ixx="8.628e-06" ixy="0.0" ixz="0.0" iyy="8.628e-06" iyz="0.0" izz="1.451e-05"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robot_description/meshes/right_wheel.STL"/>
+        </geometry>
+        <material name="">
+          <color rgba="0.792 0.820 0.933 1"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.034" length="0.025"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="rw" type="continuous">
+      <origin xyz="-0.088156 -0.118440 0.068553" rpy="-1.5708 -0.44143 3.14159"/>
+      <parent link="robot"/>
+      <child link="right_wheel"/>
+      <axis xyz="0 0 -1"/>
+      <dynamics damping="0.01" friction="0.1"/>
+    </joint>
+    <link name="left_wheel">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.0214028"/>
+        <inertia ixx="8.628e-06" ixy="0.0" ixz="0.0" iyy="8.628e-06" iyz="0.0" izz="1.451e-05"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robot_description/meshes/left_wheel.STL"/>
+        </geometry>
+        <material name="">
+          <color rgba="0.792 0.820 0.933 1"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.034" length="0.025"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="lw" type="continuous">
+      <origin xyz="-0.088663 0.042565 0.068553" rpy="-1.5708 1.3841 0"/>
+      <parent link="robot"/>
+      <child link="left_wheel"/>
+      <axis xyz="0 0 1"/>
+      <dynamics damping="0.01" friction="0.1"/>
+    </joint>
+    <link name="front_free_wheel">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001987"/>
+        <inertia ixx="5.743e-08" ixy="0.0" ixz="0.0" iyy="6.238e-08" iyz="0.0" izz="3.913e-08"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.15 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robot_description/meshes/front_free_wheel.STL"/>
+        </geometry>
+        <material name="">
+          <color rgba="0.792 0.820 0.933 1"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.012"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="ff" type="continuous">
+      <origin xyz="-0.014156 -0.037935 0.049093" rpy="1.5708 0 3.14159"/>
+      <parent link="robot"/>
+      <child link="front_free_wheel"/>
+      <axis xyz="0 1 0"/>
+      <dynamics damping="0.005" friction="0.05"/>
+    </joint>
+    <link name="back_free_wheel">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001987"/>
+        <inertia ixx="5.743e-08" ixy="0.0" ixz="0.0" iyy="6.238e-08" iyz="0.0" izz="3.913e-08"/>
+      </inertial>
+      <visual>
+        <origin xyz="-0.0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0001"/>
+        </geometry>
+        <material name="">
+          <color rgba="0.792 0.820 0.933 1"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.012"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="bf" type="continuous">
+      <origin xyz="-0.16216 -0.037935 0.049093" rpy="0 0 -1.5708"/>
+      <parent link="robot"/>
+      <child link="back_free_wheel"/>
+      <axis xyz="0 1 0"/>
+      <dynamics damping="0.005" friction="0.05"/>
+    </joint>
+  </xacro:macro>
+</robot>

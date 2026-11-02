@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="chassis">
+    <link name="robot">
+      <inertial>
+        <origin xyz="-0.088 -0.038 0.07" rpy="0 0 0"/>
+        <mass value="0.381416"/>
+        <inertia ixx="0.000443" ixy="0.0" ixz="0.0" iyy="0.000767" iyz="0.0" izz="0.001196"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 -1.5708"/>
+        <geometry>
+          <mesh filename="package://robot_description/meshes/robot.STL"/>
+        </geometry>
+        <material name="">
+          <color rgba="0.85 0.55 0.08 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="-0.088 -0.038 0.09" rpy="0 0 -1.5708"/>
+        <geometry>
+          <box size="0.20 0.18 0.08"/>
+        </geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+</robot>
